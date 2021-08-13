@@ -1,5 +1,5 @@
 provider "aws" {
-  region     = "ap-south-1"
+  region = "ap-south-1"
 }
 
 
@@ -9,10 +9,10 @@ module "vpc" {
   name = "my-vpc"
   cidr = var.vpc_cidr_block
 
-  azs             = [var.avail_zone]
-  public_subnets  = [var.subnet_cidr_block]
+  azs            = [var.avail_zone]
+  public_subnets = [var.subnet_cidr_block]
   public_subnet_tags = {
-    Name:  "${var.env_prefix}-subnet-1",
+    Name : "${var.env_prefix}-subnet-1",
   }
 
   tags = {
@@ -39,12 +39,12 @@ module "vpc" {
 # }
 
 module "myapp-webserver" {
-source = "./modules/webserver"
-vpc_id = module.vpc.vpc_id
-subnet_id = module.vpc.public_subnets[0]
-avail_zone = var.avail_zone
-env_prefix = var.env_prefix
-public_key_location = var.public_key_location
-instance_type = var.instance_type
-image_name = "amzn2-ami-hvm-*-x86_64-gp2"
+  source              = "./modules/webserver"
+  vpc_id              = module.vpc.vpc_id
+  subnet_id           = module.vpc.public_subnets[0]
+  avail_zone          = var.avail_zone
+  env_prefix          = var.env_prefix
+  public_key_location = var.public_key_location
+  instance_type       = var.instance_type
+  image_name          = "amzn2-ami-hvm-*-x86_64-gp2"
 }
